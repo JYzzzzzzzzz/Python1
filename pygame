@@ -1,0 +1,50 @@
+import pygame
+
+pygame.init()
+
+background = pygame.display.set_mode((480, 360))
+pygame.display.set_caption("game")
+
+image_fs= pygame.image.load("flyswatter.png")
+image_mosquito = pygame.image.load("Mosquito.png")
+
+size_fs_width = background.get_size()[0]
+size_fs_height = background.get_size()[1]
+
+size_mosquito_width =image_mosquito.get_rect().size[0]
+size_mosquito_height =image_mosquito.get_rect().size[1]
+
+x_pos_mosquito = size_mosquito_width/2 - size_mosquito_width/2
+y_pos_mosquito = 0
+
+x_speed_mosquito = 0.2
+y_speed_mosquito = 0.2
+
+play = True
+while play:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            play = False
+            
+    x_pos_mosquito += x_speed_mosquito
+    y_pos_mosquito += y_speed_mosquito
+    
+    if x_pos_mosquito <= 0:
+        x_speed_mosquito = -x_speed_mosquito
+        x_pos_mosquito = 0
+    elif x_pos_mosquito >= size_fs_width-size_mosquito_width:
+        x_speed_mosquito = -x_speed_mosquito
+        x_pos_mosquito = size_fs_width-size_mosquito_width
+    
+    if y_pos_mosquito <= 0:
+        y_speed_mosquito = -y_speed_mosquito
+        y_pos_mosquito = 0
+    elif y_pos_mosquito >= size_fs_height-size_mosquito_height:
+        y_speed_mosquito = -y_speed_mosquito
+        y_pos_mosquito = size_fs_height-size_mosquito_height
+    
+    background.blit(image_fs, (0,0))
+    background.blit(image_mosquito, (x_pos_mosquito, y_pos_mosquito))
+    pygame.display.update()
+           
+pygame.quit()
