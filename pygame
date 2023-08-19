@@ -28,6 +28,8 @@ while play:
             
     x_pos_mosquito += x_speed_mosquito
     y_pos_mosquito += y_speed_mosquito
+
+    gittttttkkkkdkdkdkkdkddkdkdkdkdkdkdkdk
     
     if x_pos_mosquito <= 0:
         x_speed_mosquito = -x_speed_mosquito
