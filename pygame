@@ -42,7 +42,8 @@ while play:
     elif y_pos_mosquito >= size_fs_height-size_mosquito_height:
         y_speed_mosquito = -y_speed_mosquito
         y_pos_mosquito = size_fs_height-size_mosquito_height
-    
+
+    background.fill((0, 0, 0))
     background.blit(image_fs, (0,0))
     background.blit(image_mosquito, (x_pos_mosquito, y_pos_mosquito))
     pygame.display.update()
