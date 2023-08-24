@@ -3,49 +3,72 @@ import pygame
 pygame.init()
 
 background = pygame.display.set_mode((480, 360))
+
 pygame.display.set_caption("game")
 
-image_fs= pygame.image.load("flyswatter.png")
-image_mosquito = pygame.image.load("Mosquito.png")
+#이미지 불러오기
+image_bg = pygame.image.load("background.png")
+image_fs = pygame.image.load("flyswatter.png")
+image_mosquito = pygame.image.load("mosquito.png")
 
-size_fs_width = background.get_size()[0]
-size_fs_height = background.get_size()[1]
 
-size_mosquito_width =image_mosquito.get_rect().size[0]
-size_mosquito_height =image_mosquito.get_rect().size[1]
+mosquito_rect = image_mosquito.get_rect()
 
-x_pos_mosquito = size_mosquito_width/2 - size_mosquito_width/2
+size_bg_width = image_bg.get_size()[0]
+size_bg_height = image_bg.get_size()[1]
+
+size_fs_width = image_fs.get_size()[0]
+size_fs_height = image_fs.get_size()[1]
+
+size_mosquito_width = image_mosquito.get_rect().size[0]
+size_mosquito_height = image_mosquito.get_rect().size[1]
+
+x_pos_mosquito = size_fs_width / 2 - size_mosquito_width / 2
 y_pos_mosquito = 0
 
-x_speed_mosquito = 0.2
-y_speed_mosquito = 0.2
+x_pos_fs = size_bg_width/2 - size_fs_width/2
+y_pos_fs = 0
+
+x_speed_mosquito = 1
+y_speed_mosquito = 1
+
 
 play = True
 while play:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             play = False
-            
+    #모기 움직이기
     x_pos_mosquito += x_speed_mosquito
     y_pos_mosquito += y_speed_mosquito
-    
+
     if x_pos_mosquito <= 0:
         x_speed_mosquito = -x_speed_mosquito
         x_pos_mosquito = 0
-    elif x_pos_mosquito >= size_fs_width-size_mosquito_width:
+    elif x_pos_mosquito >= size_bg_width-size_mosquito_width:
         x_speed_mosquito = -x_speed_mosquito
-        x_pos_mosquito = size_fs_width-size_mosquito_width
-    
+        x_pos_mosquito = size_bg_width-size_mosquito_width
+
     if y_pos_mosquito <= 0:
         y_speed_mosquito = -y_speed_mosquito
         y_pos_mosquito = 0
-    elif y_pos_mosquito >= size_fs_height-size_mosquito_height:
+    elif y_pos_mosquito >= size_bg_height-size_mosquito_height:
         y_speed_mosquito = -y_speed_mosquito
-        y_pos_mosquito = size_fs_height-size_mosquito_height
+        y_pos_mosquito = size_bg_height-size_mosquito_height
+        
+    #파리채 움직이기
+    if event.type == pygame.MOUSEMOTION:
+            x_pos_mouse, y_pos_mouse = pygame.mouse.get_pos()
+            x_pos_fs = x_pos_mouse-size_fs_width/2
+            y_pos_fs = y_pos_mouse-size_fs_height/2
+         
+    
 
-    background.fill((0, 0, 0))
-    background.blit(image_fs, (0,0))
+
+    background.fill((0, 0, 0))  # 배경을 검은색으로 채움
+    background.blit(image_bg, (0, 0))
     background.blit(image_mosquito, (x_pos_mosquito, y_pos_mosquito))
+    background.blit(image_fs, (x_pos_fs, y_pos_fs))
     pygame.display.update()
-           
+
 pygame.quit()
